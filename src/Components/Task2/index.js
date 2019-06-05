@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function App() {
+function Task2() {
   const [arr1, setArr1] = useState(null);
   const [arr2, setArr2] = useState(null);
   const [arr3, setArr3] = useState(null);
@@ -254,4 +254,4 @@ function App() {
   );
 }
 
-export default App;
+export default Task2;

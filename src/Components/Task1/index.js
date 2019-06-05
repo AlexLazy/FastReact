@@ -23,7 +23,7 @@ import TableRow from "@material-ui/core/TableRow";
 
 import Link from "@material-ui/core/Link";
 
-import { arr1, arr2, arr3, arr4 } from "./fixtures";
+import { arr1, arr2, arr3, arr4 } from "../../fixtures";
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function App() {
+function Task1() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -208,4 +208,4 @@ function App() {
   );
 }
 
-export default App;
+export default Task1;
