@@ -55,7 +55,7 @@ function Task2() {
     fetch(`${API_LINK}mj3z8`)
       .then(response => response.json())
       .then(response => setArr3(response));
-    fetch("https://api.spacexcom/v3/capsules")
+    fetch("https://api.spacexdata.com/v3/capsules")
       .then(response => response.json())
       .then(response => setArr4(response));
   }, []);
@@ -207,30 +207,27 @@ function Task2() {
               </TableHead>
               <TableBody>
                 {arr4.map(
-                  (
-                    {
-                      capsule_serial,
-                      capsule_id,
-                      status,
-                      original_launch,
-                      original_launch_unix,
-                      missions,
-                      landings,
-                      type,
-                      details,
-                      reuse_count
-                    },
-                    i
-                  ) => (
-                    <TableRow key={i}>
+                  ({
+                    capsule_serial,
+                    capsule_id,
+                    status,
+                    original_launch,
+                    original_launch_unix,
+                    missions,
+                    landings,
+                    type,
+                    details,
+                    reuse_count
+                  }) => (
+                    <TableRow key={capsule_serial}>
                       <TableCell>{capsule_serial}</TableCell>
                       <TableCell>{capsule_id}</TableCell>
                       <TableCell>{status}</TableCell>
                       <TableCell>{original_launch}</TableCell>
                       <TableCell>{original_launch_unix}</TableCell>
                       <TableCell>
-                        {missions.map(({ name, flight }) => (
-                          <React.Fragment>
+                        {missions.map(({ name, flight }, i) => (
+                          <React.Fragment key={i}>
                             <Typography>Name: {name}</Typography>
                             <Typography>Flight: {flight}</Typography>
                           </React.Fragment>
