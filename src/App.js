@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Header from "./Components/Header";
-import Task1 from "./Components/Task1";
-import Task2 from "./Components/Task2";
+import Header from "./components/Header";
+import Task1 from "./pages/Task1";
+import Task2 from "./pages/Task2";
 
 function App() {
   return (
