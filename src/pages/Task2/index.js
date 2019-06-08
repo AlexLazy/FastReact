@@ -30,6 +30,7 @@ function Task2() {
   const [arr2, setArr2] = useState(null);
   const [arr3, setArr3] = useState(null);
   const [arr4, setArr4] = useState(null);
+
   const API_LINK = "https://api.myjson.com/bins/";
 
   useEffect(() => {
@@ -169,23 +170,25 @@ function Task2() {
                   reuse_count
                 }) => (
                   <TableRow key={capsule_serial}>
-                    <TableCell>{capsule_serial}</TableCell>
-                    <TableCell>{capsule_id}</TableCell>
-                    <TableCell>{status}</TableCell>
-                    <TableCell>{original_launch}</TableCell>
-                    <TableCell>{original_launch_unix}</TableCell>
+                    <TableCell>{capsule_serial || "—"}</TableCell>
+                    <TableCell>{capsule_id || "—"}</TableCell>
+                    <TableCell>{status || "—"}</TableCell>
+                    <TableCell>{original_launch || "—"}</TableCell>
+                    <TableCell>{original_launch_unix || "—"}</TableCell>
                     <TableCell>
-                      {missions.map(({ name, flight }, i) => (
-                        <React.Fragment key={i}>
-                          <Typography>Name: {name}</Typography>
-                          <Typography>Flight: {flight}</Typography>
-                        </React.Fragment>
-                      ))}
+                      {missions.length > 0
+                        ? missions.map(({ name, flight }, i) => (
+                            <React.Fragment key={i}>
+                              <Typography>Name: {name}</Typography>
+                              <Typography>Flight: {flight}</Typography>
+                            </React.Fragment>
+                          ))
+                        : "—"}
                     </TableCell>
-                    <TableCell>{landings}</TableCell>
-                    <TableCell>{type}</TableCell>
-                    <TableCell>{details}</TableCell>
-                    <TableCell>{reuse_count}</TableCell>
+                    <TableCell>{landings || "—"}</TableCell>
+                    <TableCell>{type || "—"}</TableCell>
+                    <TableCell>{details || "—"}</TableCell>
+                    <TableCell>{reuse_count || "—"}</TableCell>
                   </TableRow>
                 )
               )}
