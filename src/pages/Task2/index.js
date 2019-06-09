@@ -185,10 +185,10 @@ function Task2() {
                           ))
                         : "—"}
                     </TableCell>
-                    <TableCell>{landings || "—"}</TableCell>
+                    <TableCell>{landings}</TableCell>
                     <TableCell>{type || "—"}</TableCell>
                     <TableCell>{details || "—"}</TableCell>
-                    <TableCell>{reuse_count || "—"}</TableCell>
+                    <TableCell>{reuse_count}</TableCell>
                   </TableRow>
                 )
               )}
