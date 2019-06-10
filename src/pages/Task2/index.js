@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import Typography from "@material-ui/core/Typography";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-
-import Avatar from "@material-ui/core/Avatar";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-
-import Link from "@material-ui/core/Link";
-
 import Panel from "../../components/Panel";
+import Fruits from "../../components/Fruits";
+import FruitsWithAvatar from "../../components/FruitsWithAvatar";
+import Users from "../../components/Users";
+import Capsules from "../../components/Capsules";
 
 function Task2() {
   const [expanded, setExpanded] = useState(false);
@@ -57,14 +44,7 @@ function Task2() {
         expanded={expanded}
         handleChange={handleChange}
       >
-        <List>
-          {arr1 &&
-            arr1.fruits.map((fruit, i) => (
-              <ListItem key={i}>
-                <ListItemText primary={fruit} />
-              </ListItem>
-            ))}
-        </List>
+        <Fruits data={arr1} />
       </Panel>
       <Panel
         name="panel2"
@@ -73,17 +53,7 @@ function Task2() {
         expanded={expanded}
         handleChange={handleChange}
       >
-        <List>
-          {arr2 &&
-            arr2.fruits.map(({ name, url }, i) => (
-              <ListItem key={i}>
-                <ListItemAvatar>
-                  <Avatar alt={name} src={url} />
-                </ListItemAvatar>
-                <ListItemText primary={name} />
-              </ListItem>
-            ))}
-        </List>
+        <FruitsWithAvatar data={arr2} />
       </Panel>
       <Panel
         name="panel3"
@@ -92,45 +62,7 @@ function Task2() {
         expanded={expanded}
         handleChange={handleChange}
       >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Username</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Website</TableCell>
-              <TableCell>Company</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {arr3 &&
-              arr3.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell>
-                    <Link href={`mailto:${row.email}`}>{row.email}</Link>
-                  </TableCell>
-                  <TableCell>
-                    <Typography>Street: {row.address.street}</Typography>
-                    <Typography>City: {row.address.city}</Typography>
-                  </TableCell>
-                  <TableCell>{row.phone}</TableCell>
-                  <TableCell>
-                    <Link href={`//${row.website}`}>{row.website}</Link>
-                  </TableCell>
-                  <TableCell>
-                    <Typography>Name: {row.company.name}</Typography>
-                    <Typography>
-                      Catch phrase: {row.company.catchPhrase}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+        <Users data={arr3} />
       </Panel>
       <Panel
         name="panel4"
@@ -139,61 +71,7 @@ function Task2() {
         expanded={expanded}
         handleChange={handleChange}
       >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Capsule_serial</TableCell>
-              <TableCell>Capsule_id</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Original_launch</TableCell>
-              <TableCell>Original_launch_unix</TableCell>
-              <TableCell>Missions</TableCell>
-              <TableCell>Landings</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Details</TableCell>
-              <TableCell>Reuse_count</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {arr4 &&
-              arr4.map(
-                ({
-                  capsule_serial,
-                  capsule_id,
-                  status,
-                  original_launch,
-                  original_launch_unix,
-                  missions,
-                  landings,
-                  type,
-                  details,
-                  reuse_count
-                }) => (
-                  <TableRow key={capsule_serial}>
-                    <TableCell>{capsule_serial || "—"}</TableCell>
-                    <TableCell>{capsule_id || "—"}</TableCell>
-                    <TableCell>{status || "—"}</TableCell>
-                    <TableCell>{original_launch || "—"}</TableCell>
-                    <TableCell>{original_launch_unix || "—"}</TableCell>
-                    <TableCell>
-                      {missions.length > 0
-                        ? missions.map(({ name, flight }, i) => (
-                            <React.Fragment key={i}>
-                              <Typography>Name: {name}</Typography>
-                              <Typography>Flight: {flight}</Typography>
-                            </React.Fragment>
-                          ))
-                        : "—"}
-                    </TableCell>
-                    <TableCell>{landings}</TableCell>
-                    <TableCell>{type || "—"}</TableCell>
-                    <TableCell>{details || "—"}</TableCell>
-                    <TableCell>{reuse_count}</TableCell>
-                  </TableRow>
-                )
-              )}
-          </TableBody>
-        </Table>
+        <Capsules data={arr4} />
       </Panel>
     </div>
   );
