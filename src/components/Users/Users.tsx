@@ -1,16 +1,34 @@
-import React from "react";
+import React, { FC } from 'react';
 
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
-import Link from "@material-ui/core/Link";
+import Link from '@material-ui/core/Link';
 
-function Users({ data }) {
+interface UsersProps {
+  data:
+    | {
+        id: number;
+        name: string;
+        username: string;
+        email: string;
+        address: { street: string; city: string };
+        phone: string;
+        website: string;
+        company: {
+          name: string;
+          catchPhrase: string;
+        };
+      }[]
+    | null;
+}
+
+const Users: FC<UsersProps> = ({ data }) => {
   return (
     <Table>
       <TableHead>
@@ -50,6 +68,6 @@ function Users({ data }) {
       </TableBody>
     </Table>
   );
-}
+};
 
 export default Users;

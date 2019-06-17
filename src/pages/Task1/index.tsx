@@ -1,54 +1,70 @@
-import React from "react";
+import React, { FC, useState, ChangeEvent } from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import Avatar from "@material-ui/core/Avatar";
+import Avatar from '@material-ui/core/Avatar';
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
-import Link from "@material-ui/core/Link";
+import Link from '@material-ui/core/Link';
 
-import { arr1, arr2, arr3, arr4 } from "../../fixtures";
+import { arr1, arr2, arr3, arr4 } from '../../fixtures';
+interface CapsuleProps {
+  capsule_serial: string;
+  capsule_id: string;
+  status: string;
+  original_launch: string | null;
+  original_launch_unix: number | null;
+  missions: { name: string; flight: number }[];
+  landings: number;
+  type: string;
+  details: string | null;
+  reuse_count: number;
+}
 
 const useStyles = makeStyles(theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
+    flexBasis: '33.33%',
     flexShrink: 0
   }
 }));
 
-function Task1() {
+const Task1: FC = () => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState<string>('');
 
-  const handleChange = panel => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChange = (panel: string) => (
+    event: ChangeEvent<{}>,
+    isExpanded: boolean
+  ) => {
+    setExpanded(isExpanded ? panel : '');
   };
+
   return (
-    <div className="App">
+    <div className='App'>
       <ExpansionPanel
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
+        expanded={expanded === 'panel1'}
+        onChange={handleChange('panel1')}
       >
         <ExpansionPanelSummary
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
+          aria-controls='panel1bh-content'
+          id='panel1bh-header'
         >
           <Typography className={classes.heading}>1</Typography>
         </ExpansionPanelSummary>
@@ -63,12 +79,12 @@ function Task1() {
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
+        expanded={expanded === 'panel2'}
+        onChange={handleChange('panel2')}
       >
         <ExpansionPanelSummary
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
+          aria-controls='panel2bh-content'
+          id='panel2bh-header'
         >
           <Typography className={classes.heading}>2</Typography>
         </ExpansionPanelSummary>
@@ -86,12 +102,12 @@ function Task1() {
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
+        expanded={expanded === 'panel3'}
+        onChange={handleChange('panel3')}
       >
         <ExpansionPanelSummary
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
+          aria-controls='panel3bh-content'
+          id='panel3bh-header'
         >
           <Typography className={classes.heading}>3</Typography>
         </ExpansionPanelSummary>
@@ -137,12 +153,12 @@ function Task1() {
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
-        expanded={expanded === "panel4"}
-        onChange={handleChange("panel4")}
+        expanded={expanded === 'panel4'}
+        onChange={handleChange('panel4')}
       >
         <ExpansionPanelSummary
-          aria-controls="panel4bh-content"
-          id="panel4bh-header"
+          aria-controls='panel4bh-content'
+          id='panel4bh-header'
         >
           <Typography className={classes.heading}>4</Typography>
         </ExpansionPanelSummary>
@@ -175,7 +191,7 @@ function Task1() {
                   type,
                   details,
                   reuse_count
-                }) => (
+                }: CapsuleProps) => (
                   <TableRow key={capsule_serial}>
                     <TableCell>{capsule_serial}</TableCell>
                     <TableCell>{capsule_id}</TableCell>
@@ -183,12 +199,14 @@ function Task1() {
                     <TableCell>{original_launch}</TableCell>
                     <TableCell>{original_launch_unix}</TableCell>
                     <TableCell>
-                      {missions.map(({ name, flight }, i) => (
-                        <React.Fragment key={i}>
-                          <Typography>Name: {name}</Typography>
-                          <Typography>Flight: {flight}</Typography>
-                        </React.Fragment>
-                      ))}
+                      {missions.map(
+                        ({ name, flight }, i: string | number | undefined) => (
+                          <React.Fragment key={i}>
+                            <Typography>Name: {name}</Typography>
+                            <Typography>Flight: {flight}</Typography>
+                          </React.Fragment>
+                        )
+                      )}
                     </TableCell>
                     <TableCell>{landings}</TableCell>
                     <TableCell>{type}</TableCell>
@@ -203,6 +221,6 @@ function Task1() {
       </ExpansionPanel>
     </div>
   );
-}
+};
 
 export default Task1;
