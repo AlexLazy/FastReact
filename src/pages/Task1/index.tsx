@@ -57,7 +57,7 @@ const Task1: FC = () => {
   };
 
   return (
-    <div className='App'>
+    <React.Fragment>
       <ExpansionPanel
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
@@ -219,7 +219,7 @@ const Task1: FC = () => {
           </Table>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </div>
+    </React.Fragment>
   );
 };
 

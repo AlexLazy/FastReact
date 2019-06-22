@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ReactChild } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,10 +32,10 @@ interface PanelProps {
   isDataLoaded: Boolean;
   handleChange: Function;
   expanded: string;
-  children: React.ReactChild;
+  children: ReactChild;
 }
 
-const Panel: React.FC<PanelProps> = ({
+const Panel: FC<PanelProps> = ({
   name,
   title,
   isDataLoaded,

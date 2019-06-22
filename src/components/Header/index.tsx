@@ -32,6 +32,9 @@ function Header() {
         <NavLink className={classes.link} to='/task2'>
           Task 3
         </NavLink>
+        <NavLink className={classes.link} to='/task4'>
+          Task 4
+        </NavLink>
       </Toolbar>
     </AppBar>
   );

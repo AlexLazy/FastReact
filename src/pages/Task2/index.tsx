@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, MouseEvent } from 'react';
+import React, { Fragment, useState, useEffect, FC, MouseEvent } from 'react';
 
 import Panel from '../../components/Panel';
 import Fruits from '../../components/Fruits';
@@ -39,7 +39,7 @@ const Task2: FC = () => {
   }, []);
 
   return (
-    <div className='App'>
+    <Fragment>
       <Panel
         name='panel1'
         title='1'
@@ -76,7 +76,7 @@ const Task2: FC = () => {
       >
         <Capsules data={arr4} />
       </Panel>
-    </div>
+    </Fragment>
   );
 };
 
