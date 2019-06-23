@@ -13,14 +13,21 @@ import {
   Card,
   Modal
 } from 'antd';
-import MaskedInput from 'antd-mask-input';
-import letters from '../../letterAssociations';
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
+import MaskedInput from 'antd-mask-input';
+
+import letters from '../../letterAssociations';
 
 const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   const [avatar, setAvatar] = useState<UploadFile[] | []>([]);
   const [vehicle, setVehicle] = useState<UploadFile[] | []>([]);
   const { getFieldDecorator } = form;
+
+  const clearForm = (): void => {
+    form.resetFields();
+    setAvatar([]);
+    setVehicle([]);
+  };
 
   const handleCyrToLat = (fieldName: string) => (
     e: ChangeEvent<HTMLInputElement>
@@ -56,9 +63,7 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           title: 'Спасибо',
           content: 'Ваша заявка принята. Ответ вы получите в смс и по почте.'
         });
-        form.resetFields();
-        setAvatar([]);
-        setVehicle([]);
+        clearForm();
       }
     });
   };
@@ -238,8 +243,6 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   );
 };
 
-const WrappedFlyingVehicleForm = Form.create({
+export default Form.create({
   name: 'flying_vehicle'
 })(FlyingVehicleForm);
-
-export default WrappedFlyingVehicleForm;

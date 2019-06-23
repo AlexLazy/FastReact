@@ -1,3 +1,3 @@
-import WrappedFlyingVehicleForm from './WrappedFlyingVehicleForm';
-const FlyingVehicleForm = WrappedFlyingVehicleForm;
+import FlyingVehicleForm from './WrappedFlyingVehicleForm';
+
 export default FlyingVehicleForm;
