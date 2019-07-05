@@ -1,3 +1,3 @@
-import FlyingVehicleForm from './WrappedFlyingVehicleForm';
+import FlyingVehicleForm from './FlyingVehicleForm';
 
 export default FlyingVehicleForm;

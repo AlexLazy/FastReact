@@ -17,6 +17,7 @@ import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 import MaskedInput from 'antd-mask-input';
 
 import letters from '../../letterAssociations';
+import { REQUIRED_FIELD } from '../../constants';
 
 const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   const [avatar, setAvatar] = useState<UploadFile[] | []>([]);
@@ -32,14 +33,14 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   const handleCyrToLat = (fieldName: string) => (
     e: ChangeEvent<HTMLInputElement>
   ) => {
-    const normalizedString = e.currentTarget.value.normalize();
+    const normalizedString = e.target.value.normalize();
     const str = [...normalizedString];
 
     str.forEach((character, i) => {
       const isUpperCase = character === character.toUpperCase();
       const char = character.toLowerCase();
 
-      letters[char] &&
+      (letters[char] === '' || letters[char]) &&
         (isUpperCase
           ? (str[i] =
               letters[char].charAt(0).toUpperCase() + letters[char].slice(1))
@@ -84,12 +85,7 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Item label='Имя'>
             {getFieldDecorator('username', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Поле обязательно к заполнению'
-                }
-              ]
+              rules: [REQUIRED_FIELD]
             })(<Input onChange={handleCyrToLat('usernameLat')} />)}
           </Form.Item>
           <Form.Item label='Имя латиницей'>
@@ -97,12 +93,7 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           </Form.Item>
           <Form.Item label='Фамилия'>
             {getFieldDecorator('lastname', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Поле обязательно к заполнению'
-                }
-              ]
+              rules: [REQUIRED_FIELD]
             })(<Input onChange={handleCyrToLat('lastnameLat')} />)}
           </Form.Item>
           <Form.Item label='Фамилия латиницей'>
@@ -115,25 +106,18 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
                   type: 'email',
                   message: 'Невалидная информация'
                 },
-                {
-                  required: true,
-                  message: 'Поле обязательно к заполнению'
-                }
+                REQUIRED_FIELD
               ]
             })(<Input />)}
           </Form.Item>
           <Form.Item label='Номер телефона'>
             {getFieldDecorator('phone', {
-              rules: [
-                { required: true, message: 'Поле обязательно к заполнению' }
-              ]
+              rules: [REQUIRED_FIELD]
             })(<MaskedInput mask='+7 (111) 111-11-11' />)}
           </Form.Item>
           <Form.Item label='Личная фотография'>
             {getFieldDecorator('avatar', {
-              rules: [
-                { required: true, message: 'Поле обязательно к заполнению' }
-              ]
+              rules: [REQUIRED_FIELD]
             })(
               <Upload
                 listType='picture-card'
@@ -152,22 +136,12 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           </Form.Item>
           <Form.Item label='Название летательного средства'>
             {getFieldDecorator('vehicleName', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Поле обязательно к заполнению'
-                }
-              ]
+              rules: [REQUIRED_FIELD]
             })(<Input />)}
           </Form.Item>
           <Form.Item label='Объем двигателя'>
             {getFieldDecorator('capacity', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Поле обязательно к заполнению'
-                }
-              ]
+              rules: [REQUIRED_FIELD]
             })(<InputNumber min={0} formatter={value => `${value}л`} />)}
           </Form.Item>
           <Form.Item label='Возможность вернуться из черной дыры'>
@@ -178,12 +152,7 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           {form.getFieldValue('isComeback') && (
             <Form.Item label='Вероятность вернуться из черной дыры'>
               {getFieldDecorator('comeback', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Поле обязательно к заполнению'
-                  }
-                ]
+                rules: [REQUIRED_FIELD]
               })(
                 <InputNumber
                   min={0}
@@ -205,20 +174,13 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           {form.getFieldValue('recording') !== 'no' && (
             <Form.Item label='Скорость передачи информации'>
               {getFieldDecorator('recordingSpeed', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Поле обязательно к заполнению'
-                  }
-                ]
+                rules: [REQUIRED_FIELD]
               })(<InputNumber min={0} formatter={value => `${value}Гб/с`} />)}
             </Form.Item>
           )}
           <Form.Item label='Фото летательного транспорта'>
             {getFieldDecorator('photo', {
-              rules: [
-                { required: true, message: 'Поле обязательно к заполнению' }
-              ]
+              rules: [REQUIRED_FIELD]
             })(
               <Upload
                 listType='picture'
