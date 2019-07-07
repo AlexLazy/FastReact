@@ -29,11 +29,18 @@ function Header() {
         <NavLink className={classes.link} to='/task2'>
           Task 2
         </NavLink>
-        <NavLink className={classes.link} to='/task2'>
+        <NavLink className={classes.link} to='/task3'>
           Task 3
         </NavLink>
         <NavLink className={classes.link} to='/task4'>
           Task 4
+        </NavLink>
+        <NavLink
+          className={classes.link}
+          to='/proposals'
+          isActive={(match, location) => /^\/proposal/.test(location.pathname)}
+        >
+          Task 5
         </NavLink>
       </Toolbar>
     </AppBar>

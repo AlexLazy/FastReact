@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, ChangeEvent, useState } from 'react';
+import React, { FC, FormEvent, ChangeEvent, useState } from 'react';
 
 import { FormComponentProps } from 'antd/lib/form/Form';
 import {
@@ -16,12 +16,16 @@ import {
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 import MaskedInput from 'antd-mask-input';
 
+import uuid from 'uuid/v4';
+import useLocalStorage from 'react-use-localstorage';
+
 import letters from '../../letterAssociations';
 import { REQUIRED_FIELD } from '../../constants';
 
 const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   const [avatar, setAvatar] = useState<UploadFile[] | []>([]);
   const [vehicle, setVehicle] = useState<UploadFile[] | []>([]);
+  const [proposals, setProposals] = useLocalStorage('proposals', '');
   const { getFieldDecorator } = form;
 
   const clearForm = (): void => {
@@ -56,15 +60,28 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
   const handleChangeVehicle = (info: UploadChangeParam) =>
     setVehicle(info.fileList);
 
-  const handleSubmit = (e: MouseEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
-    form.validateFields(err => {
+
+    form.validateFields((err, values) => {
       if (!err) {
         Modal.success({
           title: 'Спасибо',
           content: 'Ваша заявка принята. Ответ вы получите в смс и по почте.'
         });
-        clearForm();
+
+        const proposal = {
+          [uuid()]: values
+        };
+
+        const newProposals = proposals
+          ? { ...JSON.parse(proposals), ...proposal }
+          : proposal;
+
+        // setProposals(JSON.stringify(proposal));
+        setProposals(JSON.stringify(newProposals));
+        console.dir(proposals);
+        // clearForm();
       }
     });
   };
