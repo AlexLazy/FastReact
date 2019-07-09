@@ -1,11 +1,11 @@
-import React, { FC, FormEvent, ChangeEvent, useState } from 'react';
+import React, { FC, FormEvent, ChangeEvent, useState, useEffect } from 'react';
+import { Link, match } from 'react-router-dom';
 
 import { FormComponentProps } from 'antd/lib/form/Form';
 import {
   Form,
   Input,
   InputNumber,
-  Switch,
   Radio,
   Upload,
   Button,
@@ -20,13 +20,26 @@ import uuid from 'uuid/v4';
 import useLocalStorage from 'react-use-localstorage';
 
 import letters from '../../letterAssociations';
-import { REQUIRED_FIELD } from '../../constants';
+import {
+  REQUIRED_FIELD,
+  MODAL_ADD_SUCCES,
+  MODAL_EDIT_SUCCES
+} from '../../constants';
 
-const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
+interface RouteParams {
+  id: string;
+}
+
+interface FlyingVehicleFormProps extends FormComponentProps {
+  match?: match<RouteParams>;
+}
+
+const FlyingVehicleForm: FC<FlyingVehicleFormProps> = ({ form, match }) => {
   const [avatar, setAvatar] = useState<UploadFile[] | []>([]);
   const [vehicle, setVehicle] = useState<UploadFile[] | []>([]);
   const [proposals, setProposals] = useLocalStorage('proposals', '');
   const { getFieldDecorator } = form;
+  const id = (match && match.params.id) || null;
 
   const clearForm = (): void => {
     form.resetFields();
@@ -65,26 +78,43 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
 
     form.validateFields((err, values) => {
       if (!err) {
-        Modal.success({
-          title: 'Спасибо',
-          content: 'Ваша заявка принята. Ответ вы получите в смс и по почте.'
-        });
-
         const proposal = {
-          [uuid()]: values
+          [id ? id : uuid()]: values
         };
 
         const newProposals = proposals
           ? { ...JSON.parse(proposals), ...proposal }
           : proposal;
 
-        // setProposals(JSON.stringify(proposal));
         setProposals(JSON.stringify(newProposals));
-        console.dir(proposals);
-        // clearForm();
+
+        Modal.success(id ? MODAL_EDIT_SUCCES : MODAL_ADD_SUCCES);
+
+        clearForm();
       }
     });
   };
+
+  useEffect(() => {
+    if (id) {
+      const proposal = JSON.parse(proposals)[id];
+
+      for (let key in form.getFieldsValue()) {
+        switch (key) {
+          case 'avatar':
+            setAvatar(proposal[key].fileList);
+            form.setFieldsValue({ [key]: proposal[key] });
+            break;
+          case 'photo':
+            setVehicle(proposal[key].fileList);
+            form.setFieldsValue({ [key]: proposal[key] });
+            break;
+          default:
+            form.setFieldsValue({ [key]: proposal[key] });
+        }
+      }
+    }
+  }, []);
 
   return (
     <section
@@ -96,7 +126,14 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
       }}
     >
       <Card
-        title='Форма на рассмотрение летательного аппарата'
+        title={
+          <p>
+            <Link to='/proposals'>
+              <Button type='primary' icon='left' />
+            </Link>
+            &nbsp;Форма на рассмотрение летательного аппарата
+          </p>
+        }
         style={{ width: 600, margin: 'auto' }}
       >
         <Form onSubmit={handleSubmit}>
@@ -162,23 +199,26 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
             })(<InputNumber min={0} formatter={value => `${value}л`} />)}
           </Form.Item>
           <Form.Item label='Возможность вернуться из черной дыры'>
-            {getFieldDecorator('isComeback')(
-              <Switch checkedChildren='Да' unCheckedChildren='Нет' />
+            {getFieldDecorator('isComeback', { initialValue: 'no' })(
+              <Radio.Group>
+                <Radio.Button value='yes'>Да</Radio.Button>
+                <Radio.Button value='no'>Нет</Radio.Button>
+              </Radio.Group>
             )}
           </Form.Item>
-          {form.getFieldValue('isComeback') && (
-            <Form.Item label='Вероятность вернуться из черной дыры'>
-              {getFieldDecorator('comeback', {
-                rules: [REQUIRED_FIELD]
-              })(
-                <InputNumber
-                  min={0}
-                  max={100}
-                  formatter={value => `${value}%`}
-                />
-              )}
-            </Form.Item>
-          )}
+          <Form.Item
+            label='Вероятность вернуться из черной дыры'
+            style={{
+              display:
+                form.getFieldValue('isComeback') === 'yes' ? 'block' : 'none'
+            }}
+          >
+            {getFieldDecorator('comeback', {
+              rules: [REQUIRED_FIELD]
+            })(
+              <InputNumber min={0} max={100} formatter={value => `${value}%`} />
+            )}
+          </Form.Item>
           <Form.Item label='Наличие записывающих средств, позволяющих передавать данные из черной дыры'>
             {getFieldDecorator('recording', { initialValue: 'no' })(
               <Radio.Group>
@@ -188,13 +228,17 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
               </Radio.Group>
             )}
           </Form.Item>
-          {form.getFieldValue('recording') !== 'no' && (
-            <Form.Item label='Скорость передачи информации'>
-              {getFieldDecorator('recordingSpeed', {
-                rules: [REQUIRED_FIELD]
-              })(<InputNumber min={0} formatter={value => `${value}Гб/с`} />)}
-            </Form.Item>
-          )}
+          <Form.Item
+            label='Скорость передачи информации'
+            style={{
+              display:
+                form.getFieldValue('recording') === 'no' ? 'none' : 'block'
+            }}
+          >
+            {getFieldDecorator('recordingSpeed', {
+              rules: [REQUIRED_FIELD]
+            })(<InputNumber min={0} formatter={value => `${value}Гб/с`} />)}
+          </Form.Item>
           <Form.Item label='Фото летательного транспорта'>
             {getFieldDecorator('photo', {
               rules: [REQUIRED_FIELD]
@@ -213,7 +257,7 @@ const FlyingVehicleForm: FC<FormComponentProps> = ({ form }) => {
           </Form.Item>
           <Form.Item>
             <Button type='primary' htmlType='submit'>
-              Отправить заявку
+              {id ? 'Сохранить' : 'Отправить заявку'}
             </Button>
           </Form.Item>
         </Form>

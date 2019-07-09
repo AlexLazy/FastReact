@@ -34,7 +34,6 @@ const ProposalCard: FC<ProposalCardProps> = ({ id, data, onDelete }) => {
   const classes = useStyles();
   const { Meta } = Card;
   const { vehicleName, username, lastname, avatar, photo } = data;
-  console.log(avatar);
 
   return (
     <Card

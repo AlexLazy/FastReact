@@ -38,10 +38,11 @@ const Proposal: FC<ProposalProps> = ({ match }) => {
   return (
     <section style={{ width: '100%', maxWidth: 1200, margin: '30px auto' }}>
       <Link to='/proposals'>
-        <Button type='primary' icon='left-circle'>
+        <Button type='primary' icon='left'>
           Назад к заявкам
         </Button>
       </Link>
+      &nbsp;
       <Link to={`/proposals/${match.params.id}/edit`}>
         <Button type='primary' icon='edit'>
           Редактировать заявку
