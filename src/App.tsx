@@ -10,6 +10,7 @@ import Task1 from './pages/Task1';
 import Task2 from './pages/Task2';
 import Task4 from './pages/Task4';
 import FlyingVehicleForm from './components/FlyingVehicleForm';
+import Task6 from './pages/Task6';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           path={['/proposals/:id/edit', '/proposal']}
           component={FlyingVehicleForm}
         />
+        <Route exact path='/task6' component={Task6} />
         <Route path='**' component={Page404} />
       </Switch>
     </React.Fragment>

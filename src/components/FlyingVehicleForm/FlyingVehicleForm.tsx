@@ -214,7 +214,8 @@ const FlyingVehicleForm: FC<FlyingVehicleFormProps> = ({ form, match }) => {
             }}
           >
             {getFieldDecorator('comeback', {
-              rules: [REQUIRED_FIELD]
+              rules: [REQUIRED_FIELD],
+              initialValue: 0
             })(
               <InputNumber min={0} max={100} formatter={value => `${value}%`} />
             )}
@@ -236,7 +237,8 @@ const FlyingVehicleForm: FC<FlyingVehicleFormProps> = ({ form, match }) => {
             }}
           >
             {getFieldDecorator('recordingSpeed', {
-              rules: [REQUIRED_FIELD]
+              rules: [REQUIRED_FIELD],
+              initialValue: 0
             })(<InputNumber min={0} formatter={value => `${value}Гб/с`} />)}
           </Form.Item>
           <Form.Item label='Фото летательного транспорта'>

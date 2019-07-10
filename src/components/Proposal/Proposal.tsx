@@ -34,6 +34,7 @@ const Proposal: FC<ProposalProps> = ({ match }) => {
     recordingSpeed,
     photo
   } = JSON.parse(proposals)[match.params.id];
+  console.log(isComeback);
 
   return (
     <section style={{ width: '100%', maxWidth: 1200, margin: '30px auto' }}>
@@ -74,7 +75,7 @@ const Proposal: FC<ProposalProps> = ({ match }) => {
           {capacity}л
         </Descriptions.Item>
         <Descriptions.Item label='Возможность вернуться из черной дыры'>
-          {isComeback ? `${comeback}%` : 'Нет'}
+          {isComeback === 'no' ? 'Нет' : `${comeback}%`}
         </Descriptions.Item>
         <Descriptions.Item label='Наличие записывающих средств, позволяющих передавать данные из черной дыры'>
           {recording === 'no'

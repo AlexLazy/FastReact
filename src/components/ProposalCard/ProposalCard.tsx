@@ -37,6 +37,7 @@ const ProposalCard: FC<ProposalCardProps> = ({ id, data, onDelete }) => {
 
   return (
     <Card
+      hoverable
       className={classes.card}
       cover={<img alt={vehicleName} src={photo.file.thumbUrl} />}
       actions={[

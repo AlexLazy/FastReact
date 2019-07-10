@@ -2,7 +2,7 @@ import React, { FC, MouseEvent } from 'react';
 
 import useLocalStorage from 'react-use-localstorage';
 
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
 
 import { PROPOSAL_ADD } from '../../constants';
 
@@ -11,7 +11,7 @@ import AddButton from '../AddButton';
 
 const Proposals: FC = () => {
   const [proposals, setProposals] = useLocalStorage('proposals', '');
-  const proposalsList = JSON.parse(proposals);
+  const proposalsList = proposals.length > 2 && JSON.parse(proposals);
 
   const handleDelete = (id: string) => (e: MouseEvent<HTMLElement>) => {
     const proposalsNew = Object.keys(proposalsList).reduce(
@@ -28,7 +28,7 @@ const Proposals: FC = () => {
   return (
     <section style={{ width: '100%', maxWidth: 1200, margin: '30px auto' }}>
       <Row gutter={16}>
-        {proposalsList &&
+        {proposalsList ? (
           Object.keys(proposalsList).map(proposalId => (
             <Col className='gutter-row' span={6} key={proposalId}>
               <ProposalCard
@@ -37,7 +37,12 @@ const Proposals: FC = () => {
                 onDelete={handleDelete(proposalId)}
               />
             </Col>
-          ))}
+          ))
+        ) : (
+          <Typography.Paragraph strong={true}>
+            Список заявок пуст.
+          </Typography.Paragraph>
+        )}
       </Row>
       <AddButton url={PROPOSAL_ADD} />
     </section>
